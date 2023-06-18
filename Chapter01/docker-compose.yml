@@ -1,0 +1,29 @@
+version: "3.9"
+
+
+networks: 
+  default: 
+    external: 
+      name: django_4sample
+
+services:
+  django_4sample_chapters_01:
+    build:
+      context: .
+    container_name: django_4sample_chapters_01
+    ports:
+      - "10800:10800"
+    volumes: # mapping core app to container
+      - ./mysite:/mysite
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:10800"
+
+    # env_file:
+    #   - _dev.env
+
+    # environment:
+    #   - DEBUG=1
+    #   - ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+    #   - AUTHORIZE_MEDC=${AUTHORIZE_MEDC}
+
